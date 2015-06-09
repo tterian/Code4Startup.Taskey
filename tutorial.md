@@ -1,0 +1,2 @@
+Hey guys, I am Terian and we are going to build together a super awesome and  hot web app in this series. The app will be based on Ruby on Rails API flavored by AngularJS. As a bonus we will follow trendy material design guidelines and use appropriate frameworks.
+This set of tutorials are separated into three main sessions:
