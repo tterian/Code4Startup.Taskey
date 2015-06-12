@@ -25,7 +25,7 @@ In this section I'll talk about setting up a simple Ruby on Rails back-end assum
 
 Okay, let's start. First of all we need to define our app, it's functionality and requirements. Before going deep into terminology let's try to summarize what our app is for? What problem does it solve?
 
-Taskey is a task tracking web app that lets **users** post **tasks** setting some ammout of money they are willing to pay for that **task**. **Users** can view all available **tasks**, add **comments** or **bids**. Then **task** poster can decide whom to assign a **task**. Once a **task** is assigned to a specific **user** its status is changed to 'assigned', after changed to 'closed' upon completion.
+Taskey is a task tracking web app that lets **Users** post **Tasks** setting some ammout of money they are willing to pay for that **Task**. **Users** can view all available **Tasks**, add **Comments** or **Bids**. Then **Task** poster can decide whom to assign a **Task**. Once a **Task** is assigned to a specific **User** its status is changed to 'assigned', after changed to 'closed' upon completion.
 
 Pretty straightforward eh? Look closely, we have almost defined our models while describing our app! so lets put the words in Rails way
 - Users has_many Tasks
@@ -38,7 +38,7 @@ Let's start from the models.
 ### Models
 
 #### Users
-First thing first, we'll start from the **users**. Add Devise Token Auth gem ADD LINK HERE to your Gemfile, we'll use it for authentication. Now we can generate **users** model:
+First thing first, we'll start from the **Users**. Add [Devise Token Auth](https://github.com/lynndylanhurley/devise_token_auth) gem to your Gemfile, we'll use it for authentication. Now we can generate **User** model:
 
 ```
 rails generate devise_token_auth:install User auth
@@ -160,7 +160,7 @@ A basic CRUD controller template is used, like this one for **Tasks**. For the *
 ```
 
 ### JSON Responders or let me talk to Angular
-We'll use responders gem PUT LINK HERE for generating JSON data. Let's update the controllers accordingly:
+We'll use [Responders](https://github.com/plataformatec/responders) gem for generating JSON data. Let's update the controllers accordingly:
 
 ```
 class TasksController < ApplicationController
@@ -209,6 +209,5 @@ class TasksController < ApplicationController
 
 end
 ```
-
-
+Make sure to update the application controller as well!
 
