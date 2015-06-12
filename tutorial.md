@@ -71,28 +71,42 @@ end
 
 
 ### Routes
-We will add a api scope in our routes to serve JSON data for AngularJS.
+We will add an api scope in our routes to serve JSON data for Angular.
 
 ```
   scope '/api' do
     mount_devise_token_auth_for 'User', at: '/auth'
-      resources :tasks, defaults: { format: :json }
+      resources :tasks
   end
 ```
 
 
+### Controllers
+Once we have our models we can define the controllers. We will use basic CRUD controllers for **Task**, **Comment** and **Bid** models. But first let's talk about organizing CSRF protection in application controller
+
+#### Application Controller and CSRF protection
+```
+class ApplicationController < ActionController::Base
+	include ActionController::MimeResponds
+	include DeviseTokenAuth::Concerns::SetUserByToken
+
+  	protect_from_forgery with: :null_session
+
+	before_action :configure_permitted_parameters, if: :devise_controller?
+ 
+  	protected
+    
+    def configure_permitted_parameters
+    	devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :title, :company, :invite_token, :time_zone, :provider, :uid) }
+    	devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :email, :password, :remember_me) }
+    	devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:email, :password, :password_confirmation, :current_password, :first_name, :last_name, :title, :company, :time_zone, :avatar) }
+    end
+end
+```
 
 
-
-
-
-
-
-
-
-
-
-Once we have our models we can define our controllers. We will use basic CRUD controllers. A template looks like this:
+#### Task, Comment and Bids Controllers
+A basic CRUD controller template is used, like this one for **Tasks**.
 
 ```
 	def index
