@@ -61,11 +61,23 @@ end
 ```
 
 #### Tasks, Comments and Bids
-**task**, **comment** and **bid** models are pretty simple:
+**Task**, **Comment** and **Bid** models are pretty simple:
 
 ```
 class Task < ActiveRecord::Base
 	belongs_to :user
+	has_many :comments, dependent: :destroy
+	has_many :bids, dependent: :destroy
+end
+
+class Comment < ActiveRecord::Base
+	belongs_to :user
+	belongs_to :task
+end
+
+class Bid < ActiveRecord::Base
+	belongs_to :user
+	belongs_to :task
 end
 ```
 
@@ -76,7 +88,9 @@ We will add an api scope in our routes to serve JSON data for Angular.
 ```
   scope '/api' do
     mount_devise_token_auth_for 'User', at: '/auth'
-      resources :tasks
+      resources :tasks do
+        resources :comments, :bids
+      end
   end
 ```
 
@@ -106,9 +120,11 @@ end
 
 
 #### Task, Comment and Bids Controllers
-A basic CRUD controller template is used, like this one for **Tasks**.
+A basic CRUD controller template is used, like this one for **Tasks**. For the **Comments** and **Bids** controllers are the same, just swap *Task* with *Comments* and *Bids*.
 
 ```
+	respond_to :json
+	
 	def index
 		respond_with Task.all
 	end
@@ -116,13 +132,15 @@ A basic CRUD controller template is used, like this one for **Tasks**.
 	def create
 		task = Task.new(task_params)
 		task.save
-		
+
 		respond_with task
 	end
 
 	def update
 		task = Task.find(params[:id])
 		task.update_attributes(task_params)
+		
+		respond_with task
 	end
 
 	def show
@@ -134,7 +152,19 @@ A basic CRUD controller template is used, like this one for **Tasks**.
 		task = Task.find(params[:id]).destroy
 		respond_with Task.all
 	end
-	
+
+
+	private
+
+	def task_params
+		params.require(:task).permit(
+			:title,
+			:status,
+			:description,
+			:total,
+			:user_id
+		)
+	end
 ```
 
 
