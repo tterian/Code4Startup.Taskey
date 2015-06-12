@@ -19,7 +19,7 @@ Looking nice, huh? So are you ready to roll?
 
 ## Put em on Rails
 
-In this section I'll talk about setting up a simple Ruby on Rails back-end assuming you are familiar with the framework. Even though I will not fall into details that much, you are free to add comments, questions right after this article.
+In this section I'll talk about setting up a simple Ruby on Rails back-end. I'll assume you are familiar with the framework, so will not fall into details that much. Though, you are free to add comments, questions right after this article.
 
 *Any comments, suggestions or questions are much appreciated!*
 
