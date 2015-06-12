@@ -123,6 +123,47 @@ end
 A basic CRUD controller template is used, like this one for **Tasks**. For the **Comments** and **Bids** controllers are the same, just swap *Task* with *Comments* and *Bids*.
 
 ```
+	def index
+		tasks =  Task.all
+	end
+
+	def create
+		task = Task.new(task_params)
+		task.save
+	end
+
+	def update
+		task = Task.find(params[:id])
+		task.update_attributes(task_params)
+	end
+
+	def show
+		task = Task.find(params[:id])
+	end
+
+	def destroy
+		task = Task.find(params[:id]).destroy
+	end
+
+
+	private
+
+	def task_params
+		params.require(:task).permit(
+			:title,
+			:status,
+			:description,
+			:total,
+			:user_id
+		)
+	end
+```
+
+### JSON Responders or let me talk to Angular
+We'll use responders gem PUT LINK HERE for generating JSON data. Let's update the controllers accordingly:
+
+```
+class TasksController < ApplicationController
 	respond_to :json
 	
 	def index
@@ -165,8 +206,9 @@ A basic CRUD controller template is used, like this one for **Tasks**. For the *
 			:user_id
 		)
 	end
-```
 
+end
+```
 
 
 
