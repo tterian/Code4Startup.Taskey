@@ -12,6 +12,8 @@ Eventually we will end up with a web app looking something like this:
 
 ![Screenshot](http://i.imgur.com/UVTJc60.png)
 
+PUT A GIF HERE!
+
 Looking nice, huh? So are you ready to roll?
 
 
@@ -30,7 +32,67 @@ Pretty straightforward eh? Look closely, we have almost defined our models while
 - Tasks has_many Comments
 - Tasks has_many Bids
 
-As simple as that! Once we have our models we can define our controllers. We will use basic CRUD controllers. A template looks like this:
+As simple as that!
+Let's start from the models.
+
+### Models
+
+#### Users
+First thing first, we'll start from the **users**. Add Devise Token Auth gem ADD LINK HERE to your Gemfile, we'll use it for authentication. Now we can generate **users** model:
+
+```
+rails generate devise_token_auth:install User auth
+```
+
+Our **users** model should look like:
+
+```
+class User < ActiveRecord::Base
+  devise	:database_authenticatable,
+  			:registerable,
+  			:recoverable,
+  			:rememberable,
+  			:trackable,
+  			:validatable
+  include DeviseTokenAuth::Concerns::User
+
+  has_many :tasks, dependent: :destroy
+end
+```
+
+#### Tasks, Comments and Bids
+**task**, **comment** and **bid** models are pretty simple:
+
+```
+class Task < ActiveRecord::Base
+	belongs_to :user
+end
+```
+
+
+### Routes
+We will add a api scope in our routes to serve JSON data for AngularJS.
+
+```
+  scope '/api' do
+    mount_devise_token_auth_for 'User', at: '/auth'
+      resources :tasks, defaults: { format: :json }
+  end
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+Once we have our models we can define our controllers. We will use basic CRUD controllers. A template looks like this:
 
 ```
 	def index
