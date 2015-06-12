@@ -99,6 +99,13 @@ We will add an api scope in our routes to serve JSON data for Angular.
 Once we have our models we can define the controllers. We will use basic CRUD controllers for **Task**, **Comment** and **Bid** models. But first let's talk about organizing CSRF protection in application controller
 
 #### Application Controller and CSRF protection
+Rails off-the-shelf doesn't come as "friendly" as we would like to see it as a back-end for Angular. So we need to tweak it a bit. First thing we need to deal with the Cross-Site Request Forgery protection. By default Rails comes with a solid protection mechanism against CSRF attacks. However, in our case for a sake of simplicity we are going to switch it off as far as we need Angular to PUT/POST into our databas. Change ```protect_from_forgery``` as follows:
+```
+protect_from_forgery with: :null_session
+```
+For a real world web app I would **strongly** recommend to keep CSRF protection on.
+
+Other than the CSRF tweaks we are going to pass additional strong parameters to devise controller, so the final code will look like:
 ```
 class ApplicationController < ActionController::Base
 	include ActionController::MimeResponds
@@ -120,7 +127,7 @@ end
 
 
 #### Task, Comment and Bids Controllers
-A basic CRUD controller template is used, like this one for **Tasks**. For the **Comments** and **Bids** controllers are the same, just swap *Task* with *Comments* and *Bids*.
+A basic CRUD controller template is used, like this one for **Tasks**. For the **Comments** and **Bids** controllers are the same, just swap *Task* with *Comments* or *Bids*.
 
 ```
 	def index
