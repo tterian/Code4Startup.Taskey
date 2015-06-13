@@ -23,9 +23,9 @@ In this section I'll talk about setting up a simple Ruby on Rails back-end. I'll
 
 *Any comments, suggestions or questions are much appreciated!*
 
-Okay, let's start. First of all we need to define our app, it's functionality and requirements. Before going deep into terminology let's try to summarize what our app is for? What problem does it solve?
+Okay, let's start. First of all we need to define our app, it's functionality and requirements. Before going deep into terminology let's try to describe the app. What our app is for? What problems does it solve?
 
-Taskey is a task tracking web app that lets **Users** post **Tasks** setting some ammout of money they are willing to pay for that **Task**. **Users** can view all available **Tasks**, add **Comments** or **Bids**. Then **Task** poster can decide whom to assign a **Task**. Once a **Task** is assigned to a specific **User** its status is changed to 'assigned', after changed to 'closed' upon completion.
+Taskey is a task tracking web app that lets **Users** post **Tasks** and set some ammout of money they are willing to pay for that **Task**. **Users** can view all available **Tasks**, add **Comments** or **Bids**. **Task** poster can decide whom to assign a **Task**. Once a **Task** is assigned to a specific **User** its status is changed to 'assigned', then changed to 'closed' upon completion.
 
 Pretty straightforward eh? Look closely, we have almost defined our models while describing our app! so lets put the words in Rails way
 - Users has_many Tasks
